@@ -6,6 +6,10 @@ import initializeDb from './db';
 import middleware from './middleware';
 import apiV1 from './api/v1';
 import config from './config.json';
+import dotenv from 'dotenv';
+
+// Configure dotenv
+dotenv.config();
 
 let app = express();
 app.server = http.createServer(app);
@@ -21,7 +25,6 @@ app.use(bodyParser.json({
 
 // connect to db
 initializeDb( db => {
-
   // internal middleware
   app.use(middleware({ config, db }));
 
