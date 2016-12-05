@@ -16,13 +16,14 @@ const history = syncHistoryWithStore(browserHistory, store, {
 
 import App from './App';
 import SignInPage from './scenes/SignInPage';
+import RoomsPage from './scenes/RoomsPage';
 
 render((
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
         <Route path="/room/:roomId" />
-        <Route path="/rooms" />
+        <Route path="/rooms" component={RoomsPage} />
         <Route path="/login" />
         <Route path="/register" component={SignInPage} />
       </Route>
