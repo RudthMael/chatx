@@ -24,12 +24,12 @@ app.use(bodyParser.json({
 }));
 
 // connect to db
-initializeDb( db => {
+initializeDb(() => {
   // internal middleware
-  app.use(middleware({ config, db }));
+  app.use(middleware({ config }));
 
   // api router
-  app.use('/api/v1', apiV1({ config, db }));
+  app.use('/api/v1', apiV1({ config }));
 
   app.server.listen(process.env.PORT || config.port);
 

@@ -1,13 +1,12 @@
-import mongodb from 'mongodb';
+import mongoose from 'mongoose';
 
-export default callback => {
-  mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+export default (callback) => {
+  mongoose.connect(process.env.MONGODB_URI, err => {
     if (err) {
-      console.log(err);
+      console.error(err);
       process.exit(1);
     }
 
-    // connect to a database if needed, then pass it to `callback`:
-    callback(database);
+    callback();
   });
 }
