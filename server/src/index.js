@@ -7,6 +7,8 @@ import middleware from './middleware';
 import apiV1 from './api/v1';
 import config from './config.json';
 import dotenv from 'dotenv';
+import passport from 'passport';
+import './passport';
 
 // Configure dotenv
 dotenv.config();
@@ -27,6 +29,7 @@ app.use(bodyParser.json({
 initializeDb(() => {
   // internal middleware
   app.use(middleware({ config }));
+  app.use(passport.initialize());
 
   // api router
   app.use('/api/v1', apiV1({ config }));
