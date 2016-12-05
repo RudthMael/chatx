@@ -1,0 +1,43 @@
+.room-page {
+
+}
+
+.room-page .chat {
+  display: flex;
+  margin-top: 30px;
+  height: 600px;
+}
+
+.room-page .messages-box {
+  display: flex;
+  flex-direction: column;
+  flex: 20;
+  justify-content: flex-end;
+}
+
+.room-page .messages-list {
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.room-page .message {
+  margin: 10px 0;
+}
+
+.room-page .message-input {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.room-page .message-input button {
+  margin-left: 20px;
+}
+
+.room-page .message-input textarea {
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  width: 100%;
+}
