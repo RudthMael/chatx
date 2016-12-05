@@ -35,9 +35,7 @@ export const create = ({ body, user }, res) => {
  * @param  {Object} options.params
  * @param  {Object} res
  */
-export const show = ({ user, params}, res) => {
-  Room.findById(params.id, toRes(res, 200));
-};
+export const show = ({ user, params}, res) => Room.findById(params.id, toRes(res, 200));
 
 /**
  * Joins a room
@@ -66,3 +64,10 @@ export const join = ({ user, params }, res) => {
     })
     .catch(toRes(res, 400));
 }
+
+/**
+ * List all the rooms the user is in
+ * @param  {Object} options.user
+ * @param  {Object} res
+ */
+export const list = ({ user }, res) => Room.find({}, toRes(res, 200));
