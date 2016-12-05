@@ -42,3 +42,16 @@ export const login = (username, password) => fetch(getApiPath('/users/login'), {
     password
   })
 }).then(getJSON);
+
+/**
+ * Fetch the rooms the user is in
+ * @param  {String} token
+ * @return {Promise}
+ */
+export const fetchRooms = token => fetch(getApiPath('/rooms'), {
+  headers: {
+    'content-type': 'application/json',
+    'authorization': `bearer ${token}`
+  },
+  credentials: 'include'
+}).then(getJSON);

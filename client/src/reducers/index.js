@@ -6,6 +6,7 @@ import auth from './auth'
 import room from './room';
 import messages from './messages';
 import error from './error';
+import rooms from './rooms';
 
 const initialRouterReducerState = fromJS({});
 
@@ -22,7 +23,7 @@ const router = (state = initialRouterReducerState, action) => {
 };
 
 const createReducer = () => combineReducers({
-  auth, room, messages, router, error
+  auth, room, messages, router, error, rooms
 });
 
 export default createReducer;
