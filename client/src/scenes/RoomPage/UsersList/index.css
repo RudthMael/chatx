@@ -1,0 +1,6 @@
+.room-page .users-box {
+  flex: 4;
+  border: 1px solid #CCC;
+  padding: 10px;
+  border-radius: 5px;
+}

@@ -55,3 +55,17 @@ export const fetchRooms = token => fetch(getApiPath('/rooms'), {
   },
   credentials: 'include'
 }).then(getJSON);
+
+/**
+ * Fetch a single room
+ * @param  {String} roomId
+ * @param  {String} token
+ * @return {Promise}
+ */
+export const fetchRoom = (roomId, token) => fetch(getApiPath(`/rooms/${roomId}`), {
+  headers: {
+    'content-type': 'application/json',
+    'authorization': `bearer ${token}`
+  },
+  credentials: 'include'
+}).then(getJSON);

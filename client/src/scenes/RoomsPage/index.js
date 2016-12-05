@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchRooms } from '../../actions';
 import { getRooms } from '../../selectors';
+import { Link } from 'react-router';
+
 import './index.css';
 
 class RoomsPage extends React.Component {
@@ -29,9 +31,9 @@ class RoomsPage extends React.Component {
               </div>
 
               <div className="desc">
-                <a href="#">
+                <Link to={`/room/${room.get('_id')}`}>
                   {room.get('name')} ({room.get('users').size})
-                </a>
+                </Link>
               </div>
             </div>
           ))}
