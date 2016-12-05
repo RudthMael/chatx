@@ -10,11 +10,16 @@
  */
 export function toRes(res, status=200) {
   return (err, thing) => {
-    if (err) return res.status(500).send(err);
+    if (err) {
+      return res.status(500).send({
+        error: err.message
+      });
+    }
 
-    if (thing && typeof thing.toObject==='function') {
+    if (thing && typeof thing.toObject === 'function') {
       thing = thing.toObject();
     }
+
     res.status(status).json(thing);
   };
 }
