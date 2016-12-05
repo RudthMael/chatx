@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux'
+import { Intent, Position, Toaster } from "@blueprintjs/core";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toaster = Toaster.create({
+      className: "my-toaster",
+      position: Position.TOP_CENTER
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.error.get('message') !== nextProps.error.get('message')) {
+      this.toaster.show({
+        message: nextProps.error.get('message'),
+        intent: Intent.DANGER
+      });
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div>{this.props.children}</div>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  error: state.get('error')
+});
+
+export default connect(mapStateToProps)(App);

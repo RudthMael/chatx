@@ -5,6 +5,7 @@ import { fromJS } from 'immutable';
 import auth from './auth'
 import room from './room';
 import messages from './messages';
+import error from './error';
 
 const initialRouterReducerState = fromJS({});
 
@@ -21,7 +22,7 @@ const router = (state = initialRouterReducerState, action) => {
 };
 
 const createReducer = () => combineReducers({
-  auth, room, messages, router
+  auth, room, messages, router, error
 });
 
 export default createReducer;
