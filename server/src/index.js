@@ -1,17 +1,19 @@
+// Configure dotenv
+import dotenv from 'dotenv';
+dotenv.config();
+
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import passport from 'passport';
+
+// Files from the app
 import initializeDb from './db';
 import middleware from './middleware';
 import apiV1 from './api/v1';
 import config from './config.json';
-import dotenv from 'dotenv';
-import passport from 'passport';
 import './passport';
-
-// Configure dotenv
-dotenv.config();
 
 let app = express();
 app.server = http.createServer(app);
@@ -33,6 +35,15 @@ initializeDb(() => {
 
   // api router
   app.use('/api/v1', apiV1({ config }));
+
+  // Error middleware
+  app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+      return res.status(401).json({ 'error' : `${err.name}: ${err.message}` });
+    }
+
+    next();
+  });
 
   app.server.listen(process.env.PORT || config.port);
 

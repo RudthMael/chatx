@@ -1,14 +1,18 @@
 import { Router } from 'express';
-import users, { login } from './users';
+import { login, create, show } from './users';
 import rooms from './rooms';
+import auth from '../../auth';
 
 export default ({ config }) => {
   let api = Router();
 
-  api.use('/users', users({ config }));
-  api.use('/users/login', login)
+  // Public paths
+  api.post('/users/login', login)
+  api.post('/users', create);
 
-  api.use('/rooms', rooms({ config }));
+  // Protected resources
+  api.get('/users/:id', auth, show);
+  api.use('/rooms', auth, rooms({ config }));
 
   return api;
 }

@@ -19,12 +19,13 @@ export default () => resource({
   },
 
   /** POST / - Create a new entity */
-  create({ body }, res) {
+  create({ body, user }, res) {
     Room.findOne({ name: body.name })
       .then(room => {
         if (!room) {
           const room = new Room({
-            name: body.name
+            name: body.name,
+            adminId: user._id
           });
 
           return room.save(toRes(res, 200));
