@@ -4,7 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import initializeDb from './db';
 import middleware from './middleware';
-import api from './api';
+import apiV1 from './api/v1';
 import config from './config.json';
 
 let app = express();
@@ -26,7 +26,7 @@ initializeDb( db => {
   app.use(middleware({ config, db }));
 
   // api router
-  app.use('/api', api({ config, db }));
+  app.use('/api/v1', apiV1({ config, db }));
 
   app.server.listen(process.env.PORT || config.port);
 
