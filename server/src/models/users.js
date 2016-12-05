@@ -64,6 +64,7 @@ UserSchema.methods.toObject = function() {
   };
 };
 
+export { UserSchema };
 export default mongoose.model('User', UserSchema);
 
 // export default db => ({

@@ -1,5 +1,5 @@
 {
-  "name": "chatx-server",
+  "name": "Chatx-Server",
   "version": "0.3.0",
   "description": "Starter project for an ES6 RESTful Express API",
   "main": "dist",

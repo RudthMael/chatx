@@ -20,7 +20,9 @@ app.server = http.createServer(app);
 
 // 3rd party middleware
 app.use(cors({
-  exposedHeaders: config.corsHeaders
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200,
+  credentials: true
 }));
 
 app.use(bodyParser.json({

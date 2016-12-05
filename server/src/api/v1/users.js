@@ -44,7 +44,6 @@ export const create = ({ body }, res) => {
 
   user.setPassword(body.password);
   user.save(err => {
-    console.log('ERR', err);
     if (err) {
       return res.status(400).json(err);
     }
