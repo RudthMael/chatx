@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchRooms } from '../../actions';
 import { getRooms } from '../../selectors';
+import './index.css';
 
 class RoomsPage extends React.Component {
   handleNewRoomClick(event) {
@@ -23,8 +24,15 @@ class RoomsPage extends React.Component {
 
         <div style={{ marginTop: 50 }}>
           {this.props.rooms.map(room => (
-            <div>
-              <a href="#">{room.name}</a>
+            <div key={`room-${room.get('_id')}`} className="room">
+              <div className="avatar">
+              </div>
+
+              <div className="desc">
+                <a href="#">
+                  {room.get('name')} ({room.get('users').size})
+                </a>
+              </div>
             </div>
           ))}
         </div>
