@@ -20,12 +20,16 @@ import RoomsPage from './scenes/RoomsPage';
 import RoomPage from './scenes/RoomPage';
 import RegisterPage from './scenes/RegisterPage';
 
+import { requireAuth } from './services/auth';
+
 render((
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={App}>
-        <Route path="/room/:roomId" component={RoomPage} />
-        <Route path="/rooms" component={RoomsPage} />
+      <Route path="/" component={App} >
+        <Route path="/" onEnter={requireAuth}>
+          <Route path="/room/:roomId" component={RoomPage} />
+          <Route path="/rooms" component={RoomsPage} />
+        </Route>
         <Route path="/login" component={SignInPage} />
         <Route path="/register" component={RegisterPage} />
       </Route>

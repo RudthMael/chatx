@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import { LOGIN, LOGIN_SUCCEEDED, LOGIN_FAILED } from '../actions';
 import { REGISTER, REGISTER_SUCCEEDED, REGISTER_FAILED } from '../actions';
+import { LOCAL_STORAGE_TOKEN_KEY } from '../services/auth';
 
-const LOCAL_STORAGE_TOKEN_KEY = 'chatx__token';
 const initialState = fromJS({
   loading: false,
   token: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
