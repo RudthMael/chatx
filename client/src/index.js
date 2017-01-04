@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import configureStore from './store';
 import { syncHistoryWithStore } from 'react-router-redux';
 
@@ -26,10 +26,13 @@ render((
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App} >
-        <Route path="/" onEnter={requireAuth}>
+
+        <Route onEnter={requireAuth}>
+          <IndexRoute component={RoomsPage} />
           <Route path="/room/:roomId" component={RoomPage} />
           <Route path="/rooms" component={RoomsPage} />
         </Route>
+
         <Route path="/login" component={SignInPage} />
         <Route path="/register" component={RegisterPage} />
       </Route>
