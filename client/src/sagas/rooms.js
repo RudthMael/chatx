@@ -5,7 +5,7 @@ import * as Api from '../services/api';
 import {
   FETCH_ROOMS, fetchRoomsSucceeded, fetchRoomsFailed,
   FETCH_ROOM, fetchRoomSucceeded, fetchRoomFailed,
-  JOIN_ROOM, joinRoomSucceeed, joinRoomFailed
+  JOIN_ROOM, joinRoomSucceeded, joinRoomFailed
 } from '../actions';
 import { getAuth } from '../selectors';
 
@@ -27,7 +27,7 @@ function* fetchRooms() {
 
 /**
  * Fetch room
- * @yield {Object}
+ * @param {String} options.roomId
  */
 function* fetchRoom({ roomId }) {
   try {
@@ -41,25 +41,23 @@ function* fetchRoom({ roomId }) {
   }
 }
 
-function* joinRoom({ name, createIfNotExists }) {
+/**
+ * Join a room
+ * @param {String} options.name
+ */
+function* joinRoom({ name }) {
   try {
     const auth = yield select(getAuth);
-    const data = yield call(Api.fetchRooms, { name }, auth.get('token'));
+    const userData = yield call(Api.getMe, auth.get('token'));
+    const data = yield call(Api.createRoom, { name }, auth.get('token'));
 
-    if (data.length) {
-      yield put(push(`/room/${data[0]._id}`));
-      yield put(joinRoomSucceeed(data[0]));
+    // Not the admin, then join the room
+    if (data.admin._id !== userData._id) {
+      yield call(Api.joinRoom, data._id, auth.get('token'))
     }
-    else {
-      if (createIfNotExists) {
-        const data = yield call(Api.createRoom, { name }, auth.get('token'));
-        yield put(push(`/room/${data._id}`));
-        yield put(joinRoomSucceeed(data));
-      }
-      else {
-        yield put(joinRoomFailed(new Error('Room not found')));
-      }
-    }
+
+    yield put(joinRoomSucceeded(data));
+    yield put(push(`/room/${data._id}`));
   } catch (error) {
     console.error('Error when joining room:', error); // eslint-disable-line no-console
     yield put(joinRoomFailed(error));

@@ -114,3 +114,31 @@ export const createRoom = ({ name }, token) => fetch(getApiPath('/rooms'), {
     name
   })
 }).then(getJSON);
+
+/**
+ * Joins a room
+ * @param  {String} roomId
+ * @param  {String} token
+ * @return {Promise}
+ */
+export const joinRoom = (roomId, token) => fetch(getApiPath(`/rooms/${roomId}/join`), {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json',
+    'authorization': `bearer ${token}`
+  },
+  credentials: 'include'
+}).then(getJSON);
+
+/**
+ * Get the current user information
+ * @param  {String} token
+ * @return {Promise}
+ */
+export const getMe = token => fetch(getApiPath(`/users/me`), {
+  headers: {
+    'content-type': 'application/json',
+    'authorization': `bearer ${token}`
+  },
+  credentials: 'include'
+}).then(getJSON);
