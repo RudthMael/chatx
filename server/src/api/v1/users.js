@@ -1,4 +1,3 @@
-import resource from 'resource-router-middleware';
 import { toRes } from '../../lib/util';
 import User from '../../models/users';
 import passport from 'passport';
