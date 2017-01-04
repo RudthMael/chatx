@@ -77,5 +77,5 @@ export const list = ({ user, query }, res) => {
     filter.name = query.name;
   }
 
-  Room.find(filter, toRes(res, 200));
+  Room.find(filter).where({ 'users._id': user._id }).exec(toRes(res, 200));
 };
