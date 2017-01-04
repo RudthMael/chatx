@@ -19,12 +19,14 @@ export const create = ({ body, user }, res) => {
           users: [user._id]
         });
 
+        console.log("Room:", room);
+
         return room.save((err, item) => {
           if (err) {
             return toRes(res, 201)(err, item);
           }
 
-          Room.findOne(item).populate('admin users').exec(toRes(res, 201));
+          room.populate('admin users', toRes(res, 201));
         });
       }
 
@@ -52,7 +54,6 @@ export const show = ({ user, params}, res) => {
  */
 export const join = ({ user, params }, res) => {
   Room.findById(params.id)
-    .populate('admin users')
     .then(room => {
       if (!room) {
         return res.status(404).send({ error: 'This room does not exist.' });
@@ -61,14 +62,22 @@ export const join = ({ user, params }, res) => {
       console.log(`"${user.name}" is about to join the room "${room.name}"`);
 
       // Check if the user is already in the users list
-      if (!room.users.find(u => u._id === user._id)) {
+      if (room.users.findIndex(userId => userId.equals(user._id)) < 0) {
         console.log(`"Adding ${user.name}" to the room "${room.name}"`);
 
-        room.users.push(user._id);
+        room.users.push(user);
         console.log(`"${user.name}" added to the room "${room.name}"`);
 
-        return room.save(toRes(res, 200));
+        return room.save((err, item) => {
+          if (err) {
+            return toRes(res, 200)(err, item);
+          }
+
+          room.populate('admin users', toRes(res, 200));
+        });
       }
+
+      console.log(`"${user.name}" is already in the room "${room.name}"`);
 
       res.status(200).json(room.toObject());
     })
@@ -92,5 +101,6 @@ export const list = ({ user, query }, res) => {
 
   Room.find(filter)
     .populate('admin users')
-    .where({ 'users._id': user._id }).exec(toRes(res, 200));
+    .where({ 'users': user._id })
+    .exec(toRes(res, 200));
 };
