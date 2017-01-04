@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
     return state.set('loading', true);
 
   case REGISTER_SUCCEEDED:
+    localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, action.data.token);
     return state.withMutations(s => s
       .set('currentUser', fromJS({
         name: action.data.name,
