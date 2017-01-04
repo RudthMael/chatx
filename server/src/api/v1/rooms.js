@@ -70,4 +70,12 @@ export const join = ({ user, params }, res) => {
  * @param  {Object} options.user
  * @param  {Object} res
  */
-export const list = ({ user }, res) => Room.find({}, toRes(res, 200));
+export const list = ({ user, query }, res) => {
+  const filter = {};
+
+  if (query.name) {
+    filter.name = query.name;
+  }
+
+  Room.find(filter, toRes(res, 200));
+};
