@@ -11,7 +11,9 @@ export default () => {
   api.post('/users', users.create);
 
   // Protected resources
+  api.get('/users/me', auth, users.showMe);
   api.get('/users/:id', auth, users.show);
+
   api.get('/rooms/:id', auth, rooms.show);
   api.post('/rooms/:id/join', auth, rooms.join);
   api.post('/rooms', auth, rooms.create);
