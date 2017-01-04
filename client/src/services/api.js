@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import queryString from 'query-string';
 
 /**
  * Returns the response in JSON format
@@ -70,13 +71,17 @@ export const register = (name, username, password) => fetch(getApiPath('/users')
  * @param  {String} token
  * @return {Promise}
  */
-export const fetchRooms = token => fetch(getApiPath('/rooms'), {
-  headers: {
-    'content-type': 'application/json',
-    'authorization': `bearer ${token}`
-  },
-  credentials: 'include'
-}).then(getJSON);
+export const fetchRooms = (filter, token) => {
+  const qs = queryString.stringify(filter);
+
+  return fetch(getApiPath(`/rooms${!qs ? '' : `?${qs}`}`), {
+    headers: {
+      'content-type': 'application/json',
+      'authorization': `bearer ${token}`
+    },
+    credentials: 'include'
+  }).then(getJSON);
+};
 
 /**
  * Fetch a single room
@@ -90,4 +95,22 @@ export const fetchRoom = (roomId, token) => fetch(getApiPath(`/rooms/${roomId}`)
     'authorization': `bearer ${token}`
   },
   credentials: 'include'
+}).then(getJSON);
+
+/**
+ * Creates a room
+ * @param  {String} options.name
+ * @param  {String} token
+ * @return {Promise}
+ */
+export const createRoom = ({ name }, token) => fetch(getApiPath('/rooms'), {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json',
+    'authorization': `bearer ${token}`
+  },
+  credentials: 'include',
+  body: JSON.stringify({
+    name
+  })
 }).then(getJSON);
