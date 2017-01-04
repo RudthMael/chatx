@@ -12,7 +12,8 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.error.get('message') !== nextProps.error.get('message')) {
+    if (nextProps.error.get('message')) {
+      this.toaster.clear();
       this.toaster.show({
         message: nextProps.error.get('message'),
         intent: Intent.DANGER

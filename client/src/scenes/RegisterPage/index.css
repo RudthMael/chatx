@@ -1,0 +1,12 @@
+.register-page {
+  background-color: #FFF;
+  border: 1px solid #CCC;
+  padding: 40px 0;
+}
+
+.register-page__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
