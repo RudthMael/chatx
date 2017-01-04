@@ -22,7 +22,7 @@ class RoomsPage extends React.Component {
 
   handleNewRoomSubmit(roomName, event) {
     event.preventDefault();
-    this.props.dispatch(joinRoom(roomName, true));
+    this.props.dispatch(joinRoom({ name: roomName }));
   }
 
   componentWillMount() {

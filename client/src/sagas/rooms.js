@@ -45,19 +45,26 @@ function* fetchRoom({ roomId }) {
  * Join a room
  * @param {String} options.name
  */
-function* joinRoom({ name }) {
+function* joinRoom({ name, id }) {
   try {
     const auth = yield select(getAuth);
     const userData = yield call(Api.getMe, auth.get('token'));
-    const data = yield call(Api.createRoom, { name }, auth.get('token'));
 
-    // Not the admin, then join the room
-    if (data.admin._id !== userData._id) {
-      yield call(Api.joinRoom, data._id, auth.get('token'))
+    if (id) {
+      const data = yield call(Api.joinRoom, id, auth.get('token'));
+      yield put(joinRoomSucceeded(data));
     }
+    else {
+      const data = yield call(Api.createRoom, { name }, auth.get('token'));
 
-    yield put(joinRoomSucceeded(data));
-    yield put(push(`/room/${data._id}`));
+      // Not the admin, then join the room
+      if (data.admin._id !== userData._id) {
+        yield call(Api.joinRoom, data._id, auth.get('token'))
+      }
+
+      yield put(joinRoomSucceeded(data));
+      yield put(push(`/room/${data._id}`));
+    }
   } catch (error) {
     console.error('Error when joining room:', error); // eslint-disable-line no-console
     yield put(joinRoomFailed(error));

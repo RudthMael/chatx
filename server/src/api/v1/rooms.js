@@ -54,6 +54,7 @@ export const show = ({ user, params}, res) => {
  */
 export const join = ({ user, params }, res) => {
   Room.findById(params.id)
+    .populate('admin users')
     .then(room => {
       if (!room) {
         return res.status(404).send({ error: 'This room does not exist.' });

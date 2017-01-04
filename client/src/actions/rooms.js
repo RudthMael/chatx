@@ -26,6 +26,6 @@ export const JOIN_ROOM = 'app/ROOMS/JOIN_ROOM';
 export const JOIN_ROOM_SUCCEEDED = 'app/ROOMS/JOIN_ROOM_SUCCEEDED';
 export const JOIN_ROOM_FAILED = 'app/ROOMS/JOIN_ROOM_FAILED';
 
-export const joinRoom = (name, createIfNotExists = false) => ({ type: JOIN_ROOM, name, createIfNotExists });
-export const joinRoomSucceeded = data => ({ type: JOIN_ROOM_SUCCEEDED, data });
+export const joinRoom = ({ name, id }) => ({ type: JOIN_ROOM, name, id });
+export const joinRoomSucceeded = room => ({ type: JOIN_ROOM_SUCCEEDED, room });
 export const joinRoomFailed = error => ({ type: JOIN_ROOM_FAILED, error });
