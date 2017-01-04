@@ -7,10 +7,12 @@ import 'whatwg-fetch';
  */
 export const getJSON = res => {
   if (!res.ok) {
-    const error = new Error(res.statusText || res.status);
-    error.response = res;
+    return res.json().then(json => {
+      const error = new Error(res.statusText || res.status);
+      error.message = json.message;
 
-    throw error;
+      throw error;
+    });
   }
 
   return res.json();
