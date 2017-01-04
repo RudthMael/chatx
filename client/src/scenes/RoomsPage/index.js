@@ -31,7 +31,7 @@ class RoomsPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="rooms-list">
         <h1>Your rooms</h1>
 
         <div style={{ marginTop: 20 }}>
@@ -46,9 +46,9 @@ class RoomsPage extends React.Component {
           <NewRoomDialog onSubmit={this.handleNewRoomSubmit.bind(this)} />
         </Dialog>
 
-        <div style={{ marginTop: 50 }}>
+        <div className="rooms-list__list">
           {this.props.rooms.map(room => (
-            <div key={`room-${room.get('_id')}`} className="room">
+            <div key={`room-${room.get('_id')}`} className="rooms-list__room">
               <div className="avatar">
               </div>
 
