@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 import { Intent, Position, Toaster } from "@blueprintjs/core";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
+  componentWillMount() {
     this.toaster = Toaster.create({
       className: "my-toaster",
       position: Position.TOP_CENTER
@@ -25,7 +23,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>{this.props.children}</div>
+        {this.props.children}
       </div>
     );
   }
