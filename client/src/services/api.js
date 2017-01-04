@@ -46,6 +46,26 @@ export const login = (username, password) => fetch(getApiPath('/users/login'), {
 }).then(getJSON);
 
 /**
+ * Creates a user on the backend
+ * @param  {String} name
+ * @param  {String} username
+ * @param  {String} password
+ * @return {Promise}          [description]
+ */
+export const register = (name, username, password) => fetch(getApiPath('/users'), {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json',
+  },
+  credentials: 'include',
+  body: JSON.stringify({
+    name,
+    username,
+    password
+  })
+}).then(getJSON);
+
+/**
  * Fetch the rooms the user is in
  * @param  {String} token
  * @return {Promise}

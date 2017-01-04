@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
+import { register } from '../../actions/auth';
+import { getAuth } from '../../selectors';
+
 import './index.css';
 
 class RegisterPage extends React.Component {
@@ -9,15 +12,24 @@ class RegisterPage extends React.Component {
     super(props);
 
     this.state = {
+      name: '',
       username: '',
       password: '',
-      passwordConfirmation: '',
       submitting: false
     };
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
+
     this.setState({ submitting: true });
+    this.props.dispatch(register(this.state.name, this.state.username, this.state.password));
+  }
+
+  handleNameChange(event) {
+    event.preventDefault();
+
+    this.setState({ name: event.target.value });
   }
 
   handleLoginChange(event) {
@@ -32,17 +44,24 @@ class RegisterPage extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handlePasswordConfirmationChange(event) {
-    event.preventDefault();
-
-    this.setState({ passwordConfirmation: event.target.value });
-  }
-
   render() {
     return (
       <div className="register-page">
         <div className="register-page__form">
           <form onSubmit={this.handleSubmit.bind(this)}>
+          <label className="pt-label">
+            Name
+            <input
+              className="pt-input"
+              style={{ width: 400 }}
+              type="text"
+              placeholder="Enter a name"
+              dir="auto"
+              value={this.state.name}
+              onChange={this.handleNameChange.bind(this)}
+              disabled={this.props.auth.get('loading')} />
+          </label>
+
             <label className="pt-label">
               Username
               <input
@@ -53,7 +72,7 @@ class RegisterPage extends React.Component {
                 dir="auto"
                 value={this.state.username}
                 onChange={this.handleLoginChange.bind(this)}
-                disabled={this.state.submitting} />
+                disabled={this.props.auth.get('loading')} />
             </label>
 
             <label className="pt-label">
@@ -66,24 +85,11 @@ class RegisterPage extends React.Component {
                 dir="auto"
                 value={this.state.password}
                 onChange={this.handlePasswordChange.bind(this)}
-                disabled={this.state.submitting} />
-            </label>
-
-            <label className="pt-label">
-              Password confirmation
-              <input
-                className="pt-input"
-                style={{ width: 400 }}
-                type="password"
-                placeholder="Confirm your password"
-                dir="auto"
-                value={this.state.passwordConfirmation}
-                onChange={this.handlePasswordConfirmationChange.bind(this)}
-                disabled={this.state.submitting} />
+                disabled={this.props.auth.get('loading')} />
             </label>
 
             <div style={{ textAlign: 'center' }}>
-              <button type="Submit" className="pt-button" disabled={this.state.submitting}>Sign Up</button>
+              <button type="Submit" className="pt-button" disabled={this.props.auth.get('loading')}>Sign Up</button>
             </div>
           </form>
         </div>
@@ -96,4 +102,8 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default connect(() => ({}))(RegisterPage);
+const mapStateToProps = state => ({
+  auth: getAuth(state)
+});
+
+export default connect(mapStateToProps)(RegisterPage);
