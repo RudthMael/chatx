@@ -1,4 +1,12 @@
 .signin-page {
   background-color: #FFF;
   border: 1px solid #CCC;
+  padding: 20px 0;
+}
+
+.signin-page__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
