@@ -1,13 +1,13 @@
+import './users';
 import mongoose, { Schema } from 'mongoose';
-import { UserSchema } from './users';
 
 const RoomSchema = new Schema({
   name: {
     type: String,
     required: true
   },
-  admin: UserSchema,
-  users: [UserSchema]
+  admin: { type: Schema.Types.ObjectId, ref: 'User' },
+  users: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
 export default mongoose.model('Room', RoomSchema);

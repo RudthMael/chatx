@@ -1,4 +1,3 @@
-import resource from 'resource-router-middleware';
 import { toRes } from '../../lib/util';
 import User from '../../models/users';
 import passport from 'passport';
@@ -59,6 +58,12 @@ export const create = ({ body }, res) => {
  * @param  {Object} options.params
  * @param  {Object} res
  */
-export const show = ({ params }, res) => {
-  User.findById(params.id, toRes(res, 200));
-}
+export const show = ({ params }, res) => User.findById(params.id, toRes(res, 200));
+
+/**
+ * Fetches the current user info
+ * @param  {Object} options.user
+ * @param  {Object} res
+ */
+export const showMe = ({ user }, res) => show({ params: { id: user._id } }, res);
+

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchRoom, sendMessage } from '../../actions';
+import { joinRoom, sendMessage } from '../../actions';
 import { getRoom } from '../../selectors';
 import MessagesList from './MessagesList';
 import UsersList from './UsersList';
@@ -58,7 +58,9 @@ class RoomPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(fetchRoom(this.props.params.roomId));
+    if (this.props.room.get('_id') !== this.props.params.roomId) {
+      this.props.dispatch(joinRoom({ id: this.props.params.roomId }));
+    }
   }
 
   render() {
